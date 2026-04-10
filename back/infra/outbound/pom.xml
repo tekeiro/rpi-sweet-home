@@ -17,6 +17,6 @@
     <description>Infrastructure layer - outbound</description>
 
     <modules>
-        <module>client-rest-external-service</module>
+        <module>client-rest-tvdb</module>
     </modules>
 </project>

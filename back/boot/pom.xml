@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>org.keirobm</groupId>
-            <artifactId>rpi-sweet-home-client-rest-external-service</artifactId>
+            <artifactId>rpi-sweet-home-client-rest-tvdb</artifactId>
         </dependency>
         <dependency>
             <groupId>org.keirobm</groupId>
