@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: rpi-sweet-home
