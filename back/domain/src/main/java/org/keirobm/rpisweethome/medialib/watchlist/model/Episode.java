@@ -1,4 +1,4 @@
-package org.keirobm.rpisweethome.medialib.watchlist;
+package org.keirobm.rpisweethome.medialib.watchlist.model;
 
 import lombok.Builder;
 import lombok.Data;

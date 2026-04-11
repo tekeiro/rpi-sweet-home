@@ -1,13 +1,13 @@
-package org.keirobm.rpisweethome.medialib.watchlist;
+package org.keirobm.rpisweethome.medialib.watchlist.model;
 
 import lombok.Builder;
 import lombok.Data;
-import org.keirobm.rpisweethome.common.events.EventBus;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @Data
-@Builder(toBuilder = true)
+@SuperBuilder(toBuilder = true)
 public abstract class WatchlistItem {
     protected Long id;
     protected String title;
@@ -18,4 +18,7 @@ public abstract class WatchlistItem {
     protected String externalId;
     protected boolean watched;
     protected boolean toDownload;
+
+    protected WatchlistItem() {
+    }
 }
