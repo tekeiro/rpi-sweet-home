@@ -2,6 +2,7 @@ package org.keirobm.rpisweethome.medialib.watchlist.port;
 
 import org.keirobm.rpisweethome.medialib.watchlist.input.SearchRefinement;
 import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItem;
+import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItemType;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,4 +12,6 @@ import java.util.Optional;
  */
 public interface SearchTvProviderPort {
     List<WatchlistItem> search(String query, Optional<SearchRefinement> searchRefinement);
+
+    WatchlistItem getDetails(WatchlistItemType type, String externalId);
 }

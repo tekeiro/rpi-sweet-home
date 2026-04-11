@@ -22,6 +22,11 @@ public class TvShow extends WatchlistItem {
         super();
     }
 
+    @Override
+    public WatchlistItemType getType() {
+        return WatchlistItemType.TV_SHOW;
+    }
+
     public void setToDownload(boolean toDownload) {
         this.toDownload = toDownload;
         Optional.ofNullable(this.seasons).orElse(List.of()).forEach(season -> season.setToDownload(toDownload));

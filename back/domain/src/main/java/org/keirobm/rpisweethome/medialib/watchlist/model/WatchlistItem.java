@@ -21,4 +21,6 @@ public abstract class WatchlistItem {
 
     protected WatchlistItem() {
     }
+
+    public abstract WatchlistItemType getType();
 }

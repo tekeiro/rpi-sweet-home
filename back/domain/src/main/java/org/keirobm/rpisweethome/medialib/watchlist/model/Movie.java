@@ -16,6 +16,11 @@ public class Movie extends WatchlistItem {
         super();
     }
 
+    @Override
+    public WatchlistItemType getType() {
+        return WatchlistItemType.MOVIE;
+    }
+
     public void setToDownload(boolean toDownload) {
         this.toDownload = toDownload;
         if (toDownload)

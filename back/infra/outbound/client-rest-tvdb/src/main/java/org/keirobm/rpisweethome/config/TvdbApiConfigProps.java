@@ -6,8 +6,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "tvdb.api")
+@ConfigurationProperties(prefix = "rpi-sweet-home.tvdb")
 public class TvdbApiConfigProps {
+    private String baseUrl;
     private String apiKey;
     private Integer limit;
 }

@@ -1,8 +1,7 @@
 package org.keirobm.rpisweethome.medialib;
 
 
-import com.tvdb.v4.api.LoginApi;
-import com.tvdb.v4.api.SearchApi;
+import com.tvdb.v4.api.*;
 import com.tvdb.v4.model.LoginPostRequest;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
@@ -22,6 +21,14 @@ public class TvdbApi {
     private final TvdbApiConfigProps configProps;
 
     private final SearchApi searchApi;
+
+    private final MoviesApi moviesApi;
+
+    private final SeriesApi seriesApi;
+
+    private final SeasonsApi seasonsApi;
+
+    private final EpisodesApi episodesApi;
 
     @PostConstruct
     public void login() {

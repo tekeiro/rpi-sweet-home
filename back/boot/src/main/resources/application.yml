@@ -1,3 +1,14 @@
 spring:
   application:
     name: rpi-sweet-home
+
+
+rpi-sweet-home:
+  executors:
+    io-executor:
+      type: ${EXECUTORS_IO_TYPE:VIRTUAL_THREAD_POOL}
+      threads: ${EXECUTORS_IO_THREADS:5}
+  tvdb:
+    base-url: ${TVDB_API_BASE_URL:https://api.thetvdb.com/v4}
+    api-key: ${TVDB_API_KEY:}
+    limit: ${TVDB_API_LIMIT:100}

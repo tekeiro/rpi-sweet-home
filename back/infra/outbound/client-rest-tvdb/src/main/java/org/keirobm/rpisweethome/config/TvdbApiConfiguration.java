@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Optional;
+
 @Configuration
 public class TvdbApiConfiguration {
 
@@ -13,9 +15,12 @@ public class TvdbApiConfiguration {
 
     @Bean
     @Qualifier("tvdbApi")
-    public ApiClient tvdbApi() {
+    public ApiClient tvdbApi(TvdbApiConfigProps props) {
         final var apiClient = new ApiClient();
-        apiClient.setBasePath(TVDB_API_BASE_URL);
+        apiClient.setBasePath(Optional.ofNullable(props)
+                .map(TvdbApiConfigProps::getBaseUrl)
+                .orElse(TVDB_API_BASE_URL)
+        );
         return apiClient;
     }
 
@@ -42,6 +47,11 @@ public class TvdbApiConfiguration {
     @Bean
     public EpisodesApi episodesApi(@Qualifier("tvdbApi") ApiClient apiClient) {
         return new EpisodesApi(apiClient);
+    }
+
+    @Bean
+    public SeriesApi seriesApi(@Qualifier("tvdbApi") ApiClient apiClient) {
+        return new SeriesApi(apiClient);
     }
 
 }
