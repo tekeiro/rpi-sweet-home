@@ -1,0 +1,31 @@
+schemas:
+  SearchApi:
+    get:
+      summary: "Search a watchlist item"
+      operationId: "v1MediaLibSearch"
+      tags:
+        - Search
+      parameters:
+        - name: "query"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+        - name: year
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+        - name: language
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '../components/watchlistitem.yml#/schemas/WatchlistItemListDTO'

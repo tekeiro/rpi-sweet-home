@@ -1,0 +1,101 @@
+schemas:
+  WatchlistItemListDTO:
+    type: array
+    items:
+      $ref: '#/schemas/WatchlistItemDTO'
+  WatchlistItemDTO:
+    type: object
+    allOf:
+        - $ref: '#/schemas/WatchlistItemCommonDTO'
+        - oneOf:
+            - $ref: '#/schemas/MovieDTO'
+            - $ref: '#/schemas/TvShowDTO'
+          discriminator:
+            propertyName: type
+  WatchlistItemCommonDTO:
+    type: object
+    required:
+      - id
+      - title
+      - year
+      - type
+    properties:
+      id:
+        type: integer
+        format: int64
+      type:
+        type: string
+        enum: [MOVIE, TV_SHOW]
+      title:
+        type: string
+      year:
+        type: integer
+        format: int32
+      overview:
+        type: string
+      imageUrl:
+        type: string
+      genres:
+        type: array
+        items:
+          type: string
+      externalId:
+        type: string
+      watched:
+        type: boolean
+      toDownload:
+        type: boolean
+  MovieDTO:
+    type: object
+  TvShowDTO:
+    type: object
+    properties:
+      onAir:
+        type: string
+        enum: [ON_AIR, FINISHED]
+      seasons:
+        type: array
+        items:
+          $ref: '#/schemas/SeasonDTO'
+  SeasonDTO:
+    type: object
+    required:
+      - number
+      - externalId
+    properties:
+      number:
+        type: integer
+        format: int32
+      externalId:
+        type: string
+      imageUrl:
+        type: string
+      watched:
+        type: boolean
+      toDownload:
+        type: boolean
+      episodes:
+        type: array
+        items:
+          $ref: '#/schemas/EpisodeDTO'
+  EpisodeDTO:
+    type: object
+    required:
+      - number
+      - externalId
+    properties:
+      number:
+        type: integer
+        format: int32
+      title:
+        type: string
+      externalId:
+        type: string
+      overview:
+        type: string
+      imageUrl:
+        type: string
+      watched:
+        type: boolean
+      toDownload:
+        type: boolean

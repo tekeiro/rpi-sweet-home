@@ -1,0 +1,41 @@
+schemas:
+  WatchlistApi:
+    post:
+      summary: Add a new item to watchlist
+      operationId: "v1MediaLibAddItemToWatchlist"
+      tags:
+        - Watchlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - externalId
+              properties:
+                type:
+                  type: string
+                  enum: [TV_SHOW, MOVIE]
+                externalId:
+                  type: string
+      responses:
+        '200':
+          description: Item added to watchlist successfully
+          content:
+            application/json:
+              schema:
+                $ref: "../components/watchlistitem.yml#/schemas/WatchlistItemDTO"
+    get:
+      summary: Get watchlist items
+      operationId: "v1MediaLibGetWatchlistItems"
+      tags:
+        - Watchlist
+      responses:
+        '200':
+          description: Watchlist items
+          content:
+            application/json:
+              schema:
+                $ref: "../components/watchlistitem.yml#/schemas/WatchlistItemListDTO"
