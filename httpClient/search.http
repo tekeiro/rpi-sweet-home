@@ -1,0 +1,12 @@
+### Search
+GET http://localhost:8080/v1/search?
+    query=pluribus
+
+### Add to watchlist
+POST http://localhost:8080/v1/watchlist
+Content-Type: application/json
+
+{
+  "type": "TV_SHOW",
+  "externalId": "436457"
+}

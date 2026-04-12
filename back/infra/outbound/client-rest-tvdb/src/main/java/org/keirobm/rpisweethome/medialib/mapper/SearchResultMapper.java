@@ -32,7 +32,8 @@ public class SearchResultMapper {
 
 
         final var name = searchResult.getName();
-        final var year = Integer.parseInt(searchResult.getYear());
+        final var year = (searchResult.getYear() != null && !searchResult.getYear().isBlank())
+                ? Integer.parseInt(searchResult.getYear()) : null;
 
         final var defaultOverview = searchResult.getOverviews()
                 .getOrDefault(TvdbLangs.ENG.getLangCode(), searchResult.getOverview());
