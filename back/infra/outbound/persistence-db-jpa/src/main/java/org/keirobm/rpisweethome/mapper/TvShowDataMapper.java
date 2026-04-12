@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class TvShowMapper {
+public class TvShowDataMapper {
 
     public TvShowEntity toNewEntity(TvShow tvShow) {
         final TvShowEntity entity = new TvShowEntity();

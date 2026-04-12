@@ -4,14 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.keirobm.rpisweethome.entities.EpisodeEntity;
 import org.keirobm.rpisweethome.entities.SeasonEntity;
 import org.keirobm.rpisweethome.medialib.watchlist.model.Episode;
-import org.keirobm.rpisweethome.medialib.watchlist.model.Season;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class EpisodeMapper {
+public class EpisodeDataMapper {
 
-    private final SeasonMapper seasonMapper;
+    private final SeasonDataMapper seasonDataMapper;
 
     public EpisodeEntity toNewEntity(SeasonEntity seasonEntity, Episode episode) {
         final EpisodeEntity entity = new EpisodeEntity();
@@ -30,7 +29,7 @@ public class EpisodeMapper {
     public Episode fromEntity(EpisodeEntity entity) {
         return Episode.builder()
                 .id(entity.getId())
-                .season(this.seasonMapper.fromEntity(entity.getSeason()))
+                .season(this.seasonDataMapper.fromEntity(entity.getSeason()))
                 .number(entity.getNumber())
                 .title(entity.getTitle())
                 .externalId(entity.getExternalId())

@@ -5,7 +5,7 @@ import org.keirobm.rpisweethome.medialib.watchlist.model.Movie;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MovieMapper {
+public class MovieDataMapper {
 
     public MovieEntity toNewEntity(Movie movie) {
         final MovieEntity entity = new MovieEntity();

@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SeasonMapper {
+public class SeasonDataMapper {
 
-    private final TvShowMapper tvShowMapper;
+    private final TvShowDataMapper tvShowDataMapper;
 
     public SeasonEntity toNewEntity(TvShowEntity tvShowEntity, Season season) {
         final SeasonEntity entity = new SeasonEntity();
@@ -27,7 +27,7 @@ public class SeasonMapper {
     public Season fromEntity(SeasonEntity entity) {
         return Season.builder()
                 .id(entity.getId())
-                .tvShow(this.tvShowMapper.fromEntity(entity.getTvShow()))
+                .tvShow(this.tvShowDataMapper.fromEntity(entity.getTvShow()))
                 .number(entity.getNumber())
                 .externalId(entity.getExternalId())
                 .imageUrl(entity.getImageUrl())

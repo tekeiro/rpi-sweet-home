@@ -5,10 +5,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keirobm.rpisweethome.entities.MovieEntity;
 import org.keirobm.rpisweethome.entities.TvShowEntity;
-import org.keirobm.rpisweethome.mapper.EpisodeMapper;
-import org.keirobm.rpisweethome.mapper.MovieMapper;
-import org.keirobm.rpisweethome.mapper.SeasonMapper;
-import org.keirobm.rpisweethome.mapper.TvShowMapper;
+import org.keirobm.rpisweethome.mapper.EpisodeDataMapper;
+import org.keirobm.rpisweethome.mapper.MovieDataMapper;
+import org.keirobm.rpisweethome.mapper.SeasonDataMapper;
+import org.keirobm.rpisweethome.mapper.TvShowDataMapper;
 import org.keirobm.rpisweethome.medialib.watchlist.model.*;
 import org.keirobm.rpisweethome.medialib.watchlist.port.WatchlistPersistencePort;
 import org.keirobm.rpisweethome.repositories.EpisodeRepository;
@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor
@@ -33,10 +32,10 @@ public class WatchlistPersistenceAdapter implements WatchlistPersistencePort {
     private final SeasonRepository seasonRepository;
     private final EpisodeRepository episodeRepository;
 
-    private final MovieMapper movieMapper;
-    private final TvShowMapper tvShowMapper;
-    private final SeasonMapper seasonMapper;
-    private final EpisodeMapper episodeMapper;
+    private final MovieDataMapper movieDataMapper;
+    private final TvShowDataMapper tvShowDataMapper;
+    private final SeasonDataMapper seasonDataMapper;
+    private final EpisodeDataMapper episodeDataMapper;
 
     @Transactional
     @Override
@@ -49,22 +48,22 @@ public class WatchlistPersistenceAdapter implements WatchlistPersistencePort {
     }
 
     private Movie addMovieToWatchlist(Movie movie) {
-        final var entity = this.movieMapper.toNewEntity(movie);
+        final var entity = this.movieDataMapper.toNewEntity(movie);
         this.movieRepository.save(entity);
         return movie.toBuilder().id(entity.getId()).build();
     }
 
     private TvShow addTvShowToWatchlist(TvShow item) {
-        final var tvShowEntity = this.tvShowMapper.toNewEntity(item);
+        final var tvShowEntity = this.tvShowDataMapper.toNewEntity(item);
         final var tvShowEntitySaved = this.tvShowRepository.save(tvShowEntity);
         // Save all seasons
         item.getSeasons().forEach(season -> {
-            final var seasonEntity = this.seasonMapper.toNewEntity(tvShowEntitySaved, season);
+            final var seasonEntity = this.seasonDataMapper.toNewEntity(tvShowEntitySaved, season);
             final var seasonEntitySaved = this.seasonRepository.save(seasonEntity);
 
             // Save all episodes
             season.getEpisodes().forEach(episode -> {
-               final var episodeEntity = this.episodeMapper.toNewEntity(seasonEntitySaved, episode);
+               final var episodeEntity = this.episodeDataMapper.toNewEntity(seasonEntitySaved, episode);
                this.episodeRepository.save(episodeEntity);
             });
         });
@@ -92,19 +91,19 @@ public class WatchlistPersistenceAdapter implements WatchlistPersistencePort {
     }
 
     private Movie fromEntity(MovieEntity entity) {
-        return this.movieMapper.fromEntity(entity);
+        return this.movieDataMapper.fromEntity(entity);
     }
 
     private TvShow fromEntity(TvShowEntity tvShowEntity) {
-        final TvShow tvShow = this.tvShowMapper.fromEntity(tvShowEntity);
+        final TvShow tvShow = this.tvShowDataMapper.fromEntity(tvShowEntity);
         final List<Season> seasons = new ArrayList<>();
         this.seasonRepository.findByTvShowId(tvShow.getId()).forEach(seasonEntity -> {
-            final var season = this.seasonMapper.fromEntity(seasonEntity)
+            final var season = this.seasonDataMapper.fromEntity(seasonEntity)
                     .toBuilder().tvShow(tvShow).build();
 
             final List<Episode> episodes = new ArrayList<>();
             this.episodeRepository.findBySeasonId(seasonEntity.getId()).forEach(episodeEntity -> {
-                final var episode = this.episodeMapper.fromEntity(episodeEntity)
+                final var episode = this.episodeDataMapper.fromEntity(episodeEntity)
                         .toBuilder().season(season).build();
                 episodes.add(episode);
                 season.setEpisodes(episodes);
@@ -130,18 +129,18 @@ public class WatchlistPersistenceAdapter implements WatchlistPersistencePort {
     @Override
     public WatchlistItem persist(WatchlistItem item) {
         if (item instanceof Movie movie) {
-            final var entity = this.movieMapper.toNewEntity(movie);
-            return this.movieMapper.fromEntity(
+            final var entity = this.movieDataMapper.toNewEntity(movie);
+            return this.movieDataMapper.fromEntity(
                     this.movieRepository.save(entity)
             );
         }
         else if (item instanceof TvShow tvShow) {
-            final var entity = this.tvShowMapper.toNewEntity(tvShow);
+            final var entity = this.tvShowDataMapper.toNewEntity(tvShow);
             tvShow.getSeasons().forEach(season -> {
-                final var seasonEntity = this.seasonMapper.toNewEntity(entity, season);
+                final var seasonEntity = this.seasonDataMapper.toNewEntity(entity, season);
                 this.seasonRepository.save(seasonEntity);
                 season.getEpisodes().forEach(episode -> {
-                    final var episodeEntity = this.episodeMapper.toNewEntity(seasonEntity, episode);
+                    final var episodeEntity = this.episodeDataMapper.toNewEntity(seasonEntity, episode);
                     this.episodeRepository.save(episodeEntity);
                 });
             });

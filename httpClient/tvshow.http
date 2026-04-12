@@ -1,0 +1,17 @@
+### Mark as watched or to download a Episode of a Tv Show
+PUT http://localhost:8080/v1/medialib/tvshows/152/seasons/1/episodes/1
+Content-Type: application/json
+
+{
+  "markToDownload": true,
+  "markAsWatched": false
+}
+
+### Mark as watched or to download a Season of a Tv Show
+PUT http://localhost:8080/v1/medialib/tvshows/152/seasons/1
+Content-Type: application/json
+
+{
+  "markToDownload": true,
+  "markAsWatched": false
+}

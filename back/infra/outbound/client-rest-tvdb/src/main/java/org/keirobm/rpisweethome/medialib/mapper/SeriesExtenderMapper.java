@@ -37,9 +37,13 @@ public class SeriesExtenderMapper {
         return TvShow.builder()
                 .title(title)
                 .year(year)
+                .overview(record.getOverview())
+                .onAir(onAir)
                 .imageUrl(imageUrl)
                 .externalId(externalId)
                 .genres(genres)
+                .watched(false)
+                .toDownload(false)
                 .build();
     }
 }
