@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @RequiredArgsConstructor
 @Slf4j
-public class TvdbApi {
+public class TvdbApis {
 
     private final LoginApi loginApi;
 

@@ -14,7 +14,7 @@ public class TvdbApiConfiguration {
     public static final String TVDB_API_BASE_URL = "https://api.thetvdb.com/v4";
 
     @Bean
-    @Qualifier("tvdbApi")
+    @Qualifier("tvdbApis")
     public ApiClient tvdbApi(TvdbApiConfigProps props) {
         final var apiClient = new ApiClient();
         apiClient.setBasePath(Optional.ofNullable(props)
@@ -25,32 +25,32 @@ public class TvdbApiConfiguration {
     }
 
     @Bean
-    public LoginApi loginApi(@Qualifier("tvdbApi") ApiClient apiClient) {
+    public LoginApi loginApi(@Qualifier("tvdbApis") ApiClient apiClient) {
         return new LoginApi(apiClient);
     }
 
     @Bean
-    public SearchApi searchApi(@Qualifier("tvdbApi") ApiClient apiClient) {
+    public SearchApi searchApi(@Qualifier("tvdbApis") ApiClient apiClient) {
         return new SearchApi(apiClient);
     }
 
     @Bean
-    public SeasonsApi seasonsApi(@Qualifier("tvdbApi") ApiClient apiClient) {
+    public SeasonsApi seasonsApi(@Qualifier("tvdbApis") ApiClient apiClient) {
         return new SeasonsApi(apiClient);
     }
 
     @Bean
-    public MoviesApi moviesApi(@Qualifier("tvdbApi") ApiClient apiClient) {
+    public MoviesApi moviesApi(@Qualifier("tvdbApis") ApiClient apiClient) {
         return new MoviesApi(apiClient);
     }
 
     @Bean
-    public EpisodesApi episodesApi(@Qualifier("tvdbApi") ApiClient apiClient) {
+    public EpisodesApi episodesApi(@Qualifier("tvdbApis") ApiClient apiClient) {
         return new EpisodesApi(apiClient);
     }
 
     @Bean
-    public SeriesApi seriesApi(@Qualifier("tvdbApi") ApiClient apiClient) {
+    public SeriesApi seriesApi(@Qualifier("tvdbApis") ApiClient apiClient) {
         return new SeriesApi(apiClient);
     }
 

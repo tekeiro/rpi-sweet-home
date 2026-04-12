@@ -2,7 +2,7 @@ package org.keirobm.rpisweethome.medialib.adapter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.keirobm.rpisweethome.medialib.TvdbApi;
+import org.keirobm.rpisweethome.medialib.TvdbApis;
 import org.keirobm.rpisweethome.medialib.mapper.SearchResultMapper;
 import org.keirobm.rpisweethome.medialib.services.GetItemDetailsService;
 import org.keirobm.rpisweethome.medialib.watchlist.input.SearchRefinement;
@@ -23,20 +23,20 @@ public class SearchTvProviderAdapter implements SearchTvProviderPort {
 
     public static final long DEFAULT_LIMIT = 100L;
 
-    private final TvdbApi tvdbApi;
+    private final TvdbApis tvdbApis;
     private final SearchResultMapper searchResultMapper;
     private final GetItemDetailsService getItemDetailsService;
 
     @Override
     public List<WatchlistItem> search(String query, Optional<SearchRefinement> searchRefinement) {
-        final var limit = Optional.ofNullable(this.tvdbApi.getConfigProps().getLimit())
+        final var limit = Optional.ofNullable(this.tvdbApis.getConfigProps().getLimit())
                 .map(BigDecimal::valueOf).orElse(BigDecimal.valueOf(DEFAULT_LIMIT));
         final var year = searchRefinement.map(SearchRefinement::getYear)
                 .map(BigDecimal::new).orElse(null);
         final var lang = searchRefinement.map(SearchRefinement::getLanguage)
                 .map(TvdbLangs::getLangCode).orElse(null);
 
-        final var searchResults = this.tvdbApi.getSearchApi().getSearchResults(query, null, null,
+        final var searchResults = this.tvdbApis.getSearchApi().getSearchResults(query, null, null,
                 year, null, null, null, lang, null, null,
                 null, BigDecimal.ZERO, limit);
 

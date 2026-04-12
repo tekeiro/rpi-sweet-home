@@ -40,6 +40,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
@@ -80,6 +85,8 @@
                             <generatorName>java</generatorName>
                             <generateApis>true</generateApis>
                             <generateModels>true</generateModels>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
                             <apiPackage>com.tvdb.v4.api</apiPackage>
                             <modelPackage>com.tvdb.v4.model</modelPackage>
 

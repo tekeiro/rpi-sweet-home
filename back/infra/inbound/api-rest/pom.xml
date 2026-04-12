@@ -17,7 +17,7 @@
     <description>Inbound adapter - Spring MVC REST controllers</description>
 
     <properties>
-        <openapi.version>3.0.2</openapi.version>
+        <openapi.version>2.8.16</openapi.version>
     </properties>
 
     <dependencies>

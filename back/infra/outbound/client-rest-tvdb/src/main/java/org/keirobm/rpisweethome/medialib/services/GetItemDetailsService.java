@@ -4,7 +4,7 @@ import com.tvdb.v4.model.GetEpisodeTranslation200Response;
 import com.tvdb.v4.model.Translation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.keirobm.rpisweethome.medialib.TvdbApi;
+import org.keirobm.rpisweethome.medialib.TvdbApis;
 import org.keirobm.rpisweethome.medialib.mapper.MovieExtendedMapper;
 import org.keirobm.rpisweethome.medialib.mapper.SeriesExtenderMapper;
 import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItem;
@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 @Slf4j
 public class GetItemDetailsService {
 
-    private final TvdbApi tvdbApi;
+    private final TvdbApis tvdbApis;
     private final MovieExtendedMapper movieExtendedMapper;
     private final SeriesExtenderMapper seriesExtenderMapper;
     private final FetchSeasonsAndEpisodeService fetchSeasonsAndEpisodeService;
@@ -57,9 +57,9 @@ public class GetItemDetailsService {
         final BigDecimal idToNumber = new BigDecimal(externalId);
 
         final var getMovieDetailsTask = this.ioExecutor.submit("get-movie-extended",
-                () -> this.tvdbApi.getMoviesApi().getMovieExtended(idToNumber, null, null));
+                () -> this.tvdbApis.getMoviesApi().getMovieExtended(idToNumber, null, null));
         final var getMovieOverviewTask = this.ioExecutor.submit("get-movie-overview",
-                this.overviewSupplier(() -> this.tvdbApi.getMoviesApi().getMovieTranslation(idToNumber, TvdbLangs.DEFAULT_LANG.getLangCode())));
+                this.overviewSupplier(() -> this.tvdbApis.getMoviesApi().getMovieTranslation(idToNumber, TvdbLangs.DEFAULT_LANG.getLangCode())));
 
         final var overview = getMovieOverviewTask.join();
         final var response = getMovieDetailsTask.join();
@@ -74,9 +74,9 @@ public class GetItemDetailsService {
         final BigDecimal idToNumber = new BigDecimal(externalId);
 
         final var getSeriesDetailsTask = this.ioExecutor.submit("get-series-extended",
-                () -> this.tvdbApi.getSeriesApi().getSeriesExtended(idToNumber, null, null));
+                () -> this.tvdbApis.getSeriesApi().getSeriesExtended(idToNumber, null, null));
         final var getSeriesOverviewTask = this.ioExecutor.submit("get-series-overview",
-                this.overviewSupplier(() -> this.tvdbApi.getSeriesApi().getSeriesTranslation(idToNumber, TvdbLangs.DEFAULT_LANG.getLangCode())));
+                this.overviewSupplier(() -> this.tvdbApis.getSeriesApi().getSeriesTranslation(idToNumber, TvdbLangs.DEFAULT_LANG.getLangCode())));
 
         final var seriesDetails = getSeriesDetailsTask.join();
         final var overview = getSeriesOverviewTask.join();

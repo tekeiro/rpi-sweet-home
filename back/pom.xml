@@ -11,6 +11,12 @@
 
     <name>rpi-sweet-home</name>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.13</version>
+    </parent>
+
     <modules>
         <module>domain</module>
         <module>application</module>

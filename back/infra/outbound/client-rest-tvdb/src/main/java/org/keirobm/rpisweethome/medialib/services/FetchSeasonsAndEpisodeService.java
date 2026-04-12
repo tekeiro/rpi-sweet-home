@@ -4,7 +4,7 @@ import com.tvdb.v4.model.GetSeasonExtended200Response;
 import com.tvdb.v4.model.GetSeriesArtworks200Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.keirobm.rpisweethome.medialib.TvdbApi;
+import org.keirobm.rpisweethome.medialib.TvdbApis;
 import org.keirobm.rpisweethome.medialib.watchlist.model.Episode;
 import org.keirobm.rpisweethome.medialib.watchlist.model.Season;
 import org.keirobm.rpisweethome.medialib.watchlist.model.TvShow;
@@ -21,7 +21,7 @@ import java.util.concurrent.CompletableFuture;
 public class FetchSeasonsAndEpisodeService {
 
     private final TaskRunner ioExecutor;
-    private final TvdbApi tvdbApi;
+    private final TvdbApis tvdbApis;
 
 
     public List<Season> fetchSeasons(TvShow tvShow, GetSeriesArtworks200Response record) {
@@ -54,7 +54,7 @@ public class FetchSeasonsAndEpisodeService {
 
         seasons.forEach(season -> {
            final var getSeasonTask = this.ioExecutor.submit("fetch-season-"+season.getNumber(), () ->
-                   this.tvdbApi.getSeasonsApi().getSeasonExtended(new BigDecimal(season.getExternalId())));
+                   this.tvdbApis.getSeasonsApi().getSeasonExtended(new BigDecimal(season.getExternalId())));
            seasonTasks.put(season.getNumber(), getSeasonTask);
            seasonMap.put(season.getNumber(), season);
         });

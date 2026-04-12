@@ -11,6 +11,13 @@ spring:
       ddl-auto: validate
     show-sql: true
 
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG
+    "org.keirobm.rpisweethome": DEBUG
+    "org.springframework.web.client": DEBUG
+
 
 rpi-sweet-home:
   executors:
