@@ -4,13 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.keirobm.rpisweethome.api.WatchlistApi;
 import org.keirobm.rpisweethome.mapper.WatchlistItemMapper;
 import org.keirobm.rpisweethome.medialib.usecases.AddToWatchlistUseCase;
-import org.keirobm.rpisweethome.medialib.usecases.GetWatchlistItemsUseCase;
+import org.keirobm.rpisweethome.medialib.usecases.WatchlistItemUseCase;
+import org.keirobm.rpisweethome.medialib.watchlist.input.UpdateWatchlistItem;
 import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItemType;
+import org.keirobm.rpisweethome.model.PutWatchlistItemDTO;
 import org.keirobm.rpisweethome.model.V1MediaLibAddItemToWatchlistRequest;
 import org.keirobm.rpisweethome.model.WatchlistItemDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -18,7 +21,7 @@ import java.util.List;
 public class WatchlistController implements WatchlistApi {
 
     private final AddToWatchlistUseCase addWatchlistItemUseCase;
-    private final GetWatchlistItemsUseCase getWatchlistItemsUseCase;
+    private final WatchlistItemUseCase watchlistItemUseCase;
 
     private final WatchlistItemMapper watchlistItemMapper;
 
@@ -35,10 +38,27 @@ public class WatchlistController implements WatchlistApi {
 
     @Override
     public ResponseEntity<List<WatchlistItemDTO>> v1MediaLibGetWatchlistItems() {
-        final var items = this.getWatchlistItemsUseCase.getItems();
+        final var items = this.watchlistItemUseCase.getItems();
         return ResponseEntity.ok(
                 items.stream().map(this.watchlistItemMapper::toDto).toList()
         );
     }
 
+    @Override
+    public ResponseEntity<WatchlistItemDTO> v1MediaLibGetWatchlistItemById(BigDecimal id) {
+        final var item = this.watchlistItemUseCase.getWatchlistItemById(id.longValue());
+        return item.map(i -> ResponseEntity.ok(this.watchlistItemMapper.toDto(i)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @Override
+    public ResponseEntity<WatchlistItemDTO> v1MediaLibUpdateWatchlistItem(BigDecimal id, PutWatchlistItemDTO putWatchlistItemDTO) {
+        final UpdateWatchlistItem request = UpdateWatchlistItem.builder()
+                .markToWatch(putWatchlistItemDTO.getMarkAsWatched())
+                .markToDownload(putWatchlistItemDTO.getMarkToDownload())
+                .build();
+        final var itemModel = this.watchlistItemUseCase.updateWatchlistItem(id.longValue(), request);
+        return itemModel.map(i -> ResponseEntity.ok(this.watchlistItemMapper.toDto(i)))
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

@@ -9,6 +9,7 @@ public class MovieMapper {
 
     public MovieEntity toNewEntity(Movie movie) {
         final MovieEntity entity = new MovieEntity();
+        entity.setId(movie.getId());
         entity.setTitle(movie.getTitle());
         entity.setYear(movie.getYear());
         entity.setOverview(movie.getOverview());

@@ -12,6 +12,7 @@ import java.util.Optional;
 public class Season {
     private transient final TvShow tvShow;
 
+    private Long id;
     private Integer number;
     private String externalId;
     private String imageUrl;
@@ -26,4 +27,9 @@ public class Season {
         Optional.ofNullable(this.episodes).orElse(List.of())
                 .forEach(episode -> episode.setToDownload(toDownload));
     }
+
+    public Optional<Episode> getEpisodeByNumber(int episodeNumber) {
+        return this.episodes.stream().filter(episode -> episode.getNumber() == episodeNumber).findFirst();
+    }
+
 }

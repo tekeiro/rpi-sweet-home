@@ -1,0 +1,69 @@
+schemas:
+  SeasonApi:
+    put:
+      summary: Update season item
+      operationId: "v1MediaLibUpdateSeason"
+      tags:
+        - TvShows
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+            format: int64
+        - name: season
+          in: path
+          required: true
+          schema:
+            type: number
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "../request/tvshows.yml#/schemas/PutSeasonOrEpisodeDTO"
+      responses:
+        '200':
+          description: Watchlist item
+          content:
+            application/json:
+              schema:
+                $ref: "../components/watchlistitem.yml#/schemas/SeasonDTO"
+  EpisodeApi:
+    put:
+      summary: Update episode item
+      operationId: "v1MediaLibUpdateEpisode"
+      tags:
+        - TvShows
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+            format: int64
+        - name: season
+          in: path
+          required: true
+          schema:
+            type: number
+            format: int64
+        - name: episode
+          in: path
+          required: true
+          schema:
+            type: number
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "../request/tvshows.yml#/schemas/PutSeasonOrEpisodeDTO"
+      responses:
+        '200':
+          description: Watchlist item
+          content:
+            application/json:
+              schema:
+                $ref: "../components/watchlistitem.yml#/schemas/EpisodeDTO"

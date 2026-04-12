@@ -1,0 +1,45 @@
+schemas:
+  WatchlistItemApi:
+    get:
+      summary: Get watchlist item by id
+      operationId: "v1MediaLibGetWatchlistItemById"
+      tags:
+        - Watchlist
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+            format: int64
+      responses:
+        '200':
+          description: Watchlist item by id
+          content:
+            application/json:
+              schema:
+                $ref: "../components/watchlistitem.yml#/schemas/WatchlistItemDTO"
+    put:
+      summary: Update watchlist item
+      operationId: "v1MediaLibUpdateWatchlistItem"
+      tags:
+        - Watchlist
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "../request/watchlistitem.yml#/schemas/PutWatchlistItemDTO"
+      responses:
+        '200':
+          description: Watchlist item
+          content:
+            application/json:
+              schema:
+                $ref: "../components/watchlistitem.yml#/schemas/WatchlistItemDTO"

@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Component
@@ -77,34 +78,77 @@ public class WatchlistPersistenceAdapter implements WatchlistPersistencePort {
 
         // Read movies
         this.movieRepository.findAll().forEach(movieEntity -> {
-            final var movie = this.movieMapper.fromEntity(movieEntity);
+            final var movie = this.fromEntity(movieEntity);
             items.add(movie);
         });
 
         // Read tv shows
         this.tvShowRepository.findAll().forEach(tvShowEntity -> {
-           final TvShow tvShow = this.tvShowMapper.fromEntity(tvShowEntity);
-
-           final List<Season> seasons = new ArrayList<>();
-           this.seasonRepository.findByTvShowId(tvShow.getId()).forEach(seasonEntity -> {
-               final var season = this.seasonMapper.fromEntity(seasonEntity)
-                       .toBuilder().tvShow(tvShow).build();
-
-               final List<Episode> episodes = new ArrayList<>();
-              this.episodeRepository.findBySeasonId(seasonEntity.getId()).forEach(episodeEntity -> {
-                  final var episode = this.episodeMapper.fromEntity(episodeEntity)
-                          .toBuilder().season(season).build();
-                  episodes.add(episode);
-                  season.setEpisodes(episodes);
-              });
-
-              seasons.add(season);
-              tvShow.setSeasons(seasons);
-           });
+           final TvShow tvShow = this.fromEntity(tvShowEntity);
            items.add(tvShow);
         });
 
         return items;
+    }
+
+    private Movie fromEntity(MovieEntity entity) {
+        return this.movieMapper.fromEntity(entity);
+    }
+
+    private TvShow fromEntity(TvShowEntity tvShowEntity) {
+        final TvShow tvShow = this.tvShowMapper.fromEntity(tvShowEntity);
+        final List<Season> seasons = new ArrayList<>();
+        this.seasonRepository.findByTvShowId(tvShow.getId()).forEach(seasonEntity -> {
+            final var season = this.seasonMapper.fromEntity(seasonEntity)
+                    .toBuilder().tvShow(tvShow).build();
+
+            final List<Episode> episodes = new ArrayList<>();
+            this.episodeRepository.findBySeasonId(seasonEntity.getId()).forEach(episodeEntity -> {
+                final var episode = this.episodeMapper.fromEntity(episodeEntity)
+                        .toBuilder().season(season).build();
+                episodes.add(episode);
+                season.setEpisodes(episodes);
+            });
+
+            seasons.add(season);
+            tvShow.setSeasons(seasons);
+        });
+        return tvShow;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Optional<WatchlistItem> getItemById(Long id) {
+        final var movie = this.movieRepository.findById(id).map(this::fromEntity)
+                .map(o -> (WatchlistItem) o);
+        final var tvShow = this.tvShowRepository.findById(id).map(this::fromEntity)
+                .map(o -> (WatchlistItem) o);
+        return movie.isPresent() ? movie : tvShow;
+    }
+
+    @Transactional
+    @Override
+    public WatchlistItem persist(WatchlistItem item) {
+        if (item instanceof Movie movie) {
+            final var entity = this.movieMapper.toNewEntity(movie);
+            return this.movieMapper.fromEntity(
+                    this.movieRepository.save(entity)
+            );
+        }
+        else if (item instanceof TvShow tvShow) {
+            final var entity = this.tvShowMapper.toNewEntity(tvShow);
+            tvShow.getSeasons().forEach(season -> {
+                final var seasonEntity = this.seasonMapper.toNewEntity(entity, season);
+                this.seasonRepository.save(seasonEntity);
+                season.getEpisodes().forEach(episode -> {
+                    final var episodeEntity = this.episodeMapper.toNewEntity(seasonEntity, episode);
+                    this.episodeRepository.save(episodeEntity);
+                });
+            });
+            this.tvShowRepository.save(entity);
+            return this.getItemById(item.getId()).orElse(null);
+        }
+        return null;
     }
 
 }

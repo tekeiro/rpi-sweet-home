@@ -15,6 +15,7 @@ public class EpisodeMapper {
 
     public EpisodeEntity toNewEntity(SeasonEntity seasonEntity, Episode episode) {
         final EpisodeEntity entity = new EpisodeEntity();
+        entity.setId(episode.getId());
         entity.setSeason(seasonEntity);
         entity.setTitle(episode.getTitle());
         entity.setNumber(episode.getNumber());
@@ -28,6 +29,7 @@ public class EpisodeMapper {
 
     public Episode fromEntity(EpisodeEntity entity) {
         return Episode.builder()
+                .id(entity.getId())
                 .season(this.seasonMapper.fromEntity(entity.getSeason()))
                 .number(entity.getNumber())
                 .title(entity.getTitle())

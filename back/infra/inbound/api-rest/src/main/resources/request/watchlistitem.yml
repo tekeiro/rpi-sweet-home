@@ -1,0 +1,8 @@
+schemas:
+  PutWatchlistItemDTO:
+    type: object
+    properties:
+      markToDownload:
+        type: boolean
+      markAsWatched:
+        type: boolean

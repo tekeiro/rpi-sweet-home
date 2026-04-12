@@ -31,4 +31,8 @@ public class TvShow extends WatchlistItem {
         this.toDownload = toDownload;
         Optional.ofNullable(this.seasons).orElse(List.of()).forEach(season -> season.setToDownload(toDownload));
     }
+
+    public Optional<Season> getSeasonByNumber(int seasonNumber) {
+        return this.seasons.stream().filter(season -> season.getNumber() == seasonNumber).findFirst();
+    }
 }

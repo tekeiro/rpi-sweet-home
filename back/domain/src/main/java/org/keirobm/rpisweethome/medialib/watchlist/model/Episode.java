@@ -10,6 +10,7 @@ import org.keirobm.rpisweethome.medialib.watchlist.events.TvShowEpisodeToDownloa
 public class Episode {
     private transient final Season season;
 
+    private Long id;
     private Integer number;
     private String title;
     private String externalId;

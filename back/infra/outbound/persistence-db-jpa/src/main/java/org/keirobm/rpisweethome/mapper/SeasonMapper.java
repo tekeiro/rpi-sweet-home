@@ -14,6 +14,7 @@ public class SeasonMapper {
 
     public SeasonEntity toNewEntity(TvShowEntity tvShowEntity, Season season) {
         final SeasonEntity entity = new SeasonEntity();
+        entity.setId(season.getId());
         entity.setTvShow(tvShowEntity);
         entity.setNumber(season.getNumber());
         entity.setExternalId(season.getExternalId());
@@ -25,6 +26,7 @@ public class SeasonMapper {
 
     public Season fromEntity(SeasonEntity entity) {
         return Season.builder()
+                .id(entity.getId())
                 .tvShow(this.tvShowMapper.fromEntity(entity.getTvShow()))
                 .number(entity.getNumber())
                 .externalId(entity.getExternalId())

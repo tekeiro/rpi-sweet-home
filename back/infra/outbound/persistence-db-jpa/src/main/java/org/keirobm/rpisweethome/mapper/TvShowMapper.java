@@ -1,10 +1,12 @@
 package org.keirobm.rpisweethome.mapper;
 
+import lombok.RequiredArgsConstructor;
 import org.keirobm.rpisweethome.entities.TvShowEntity;
 import org.keirobm.rpisweethome.medialib.watchlist.model.TvShow;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class TvShowMapper {
 
     public TvShowEntity toNewEntity(TvShow tvShow) {

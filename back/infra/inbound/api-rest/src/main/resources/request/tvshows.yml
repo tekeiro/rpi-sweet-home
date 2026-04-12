@@ -1,0 +1,8 @@
+schemas:
+  PutSeasonOrEpisodeDTO:
+    type: object
+    properties:
+      markToDownload:
+        type: boolean
+      markAsWatched:
+        type: boolean

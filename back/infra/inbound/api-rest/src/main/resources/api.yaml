@@ -11,10 +11,18 @@ tags:
     description: To search in provider
   - name: Watchlist
     description: Add or get media items from watchlist
+  - name: TvShows
+    description: Modify tv show objects like seasons or episodes
 
 paths:
   /v1/medialib/search:
     $ref: "services/search.yml#/schemas/SearchApi"
   /v1/medialib/watchlist:
     $ref: "services/watchlist.yml#/schemas/WatchlistApi"
+  /v1/medialib/watchlist/{id}:
+    $ref: "services/watchlistitem.yml#/schemas/WatchlistItemApi"
+  /v1/medialib/tvshows/{id}/seasons/{season}:
+    $ref: "services/tvshows.yml#/schemas/SeasonApi"
+  /v1/medialib/tvshows/{id}/seasons/{season}/episodes/{episode}:
+    $ref: "services/tvshows.yml#/schemas/EpisodeApi"
 
