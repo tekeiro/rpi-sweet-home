@@ -1,9 +1,6 @@
 package org.keirobm.rpisweethome.entities;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItem;
 
@@ -12,6 +9,7 @@ import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItem;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
+@Entity
 @Table(name = "movies")
 public class MovieEntity extends WatchlistItemEntity {
 

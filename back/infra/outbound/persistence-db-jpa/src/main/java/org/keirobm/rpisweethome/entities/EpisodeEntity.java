@@ -8,6 +8,7 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
+@Entity
 @Table(name = "episodes")
 public class EpisodeEntity {
 

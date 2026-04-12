@@ -9,6 +9,7 @@ import org.keirobm.rpisweethome.medialib.watchlist.model.OnAirStatus;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
+@Entity
 @Table(name = "tv_shows")
 public class TvShowEntity extends WatchlistItemEntity {
 
