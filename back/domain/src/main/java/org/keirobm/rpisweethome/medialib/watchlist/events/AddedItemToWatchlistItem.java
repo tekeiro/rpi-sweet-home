@@ -9,4 +9,8 @@ import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItem;
 @EqualsAndHashCode(callSuper = true)
 public class AddedItemToWatchlistItem extends BaseEvent {
     private final WatchlistItem item;
+
+    public String toString() {
+        return String.format("AddedItemToWatchlistItemEvent{ '%s(%d)' }", item.getTitle(), item.getYear());
+    }
 }

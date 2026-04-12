@@ -13,4 +13,9 @@ public class TvShowEpisodeToDownloadEvent extends BaseEvent {
     private final TvShow tvShow;
     private final Season season;
     private final Episode episode;
+
+    public String toString() {
+        return String.format("TvShowEpisodeToDownloadEvent{ '%s(%d)' %dx%d }",
+                tvShow.getTitle(), tvShow.getYear(), season.getNumber(), episode.getNumber());
+    }
 }

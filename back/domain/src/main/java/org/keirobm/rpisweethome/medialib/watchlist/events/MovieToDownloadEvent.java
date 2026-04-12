@@ -9,4 +9,8 @@ import org.keirobm.rpisweethome.medialib.watchlist.model.Movie;
 @EqualsAndHashCode(callSuper = true)
 public class MovieToDownloadEvent extends BaseEvent {
     private final Movie movie;
+
+    public String toString() {
+        return String.format("MovieToDownloadEvent{ '%s(%d)' }", movie.getTitle(), movie.getYear());
+    }
 }
