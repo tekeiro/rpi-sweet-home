@@ -1,6 +1,15 @@
 spring:
   application:
     name: rpi-sweet-home
+  datasource:
+    driver-class-name: ${DB_DRIVER:org.postgresql.Driver}
+    url: ${DB_URL:jdbc:postgresql://localhost:15432/rpi-sweet-home}
+    username: ${DB_USERNAME:rpi-sweet-home}
+    password: ${DB_PASSWORD:admin1234!}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
 
 
 rpi-sweet-home:

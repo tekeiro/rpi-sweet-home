@@ -6,15 +6,15 @@
 
     <parent>
         <groupId>org.keirobm</groupId>
-        <artifactId>rpi-sweet-home</artifactId>
+        <artifactId>rpi-sweet-home-outbound</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>rpi-sweet-home-boot</artifactId>
+    <artifactId>rpi-sweet-home-persistence-db-jpa</artifactId>
     <packaging>jar</packaging>
 
-    <name>rpi-sweet-home-boot</name>
-    <description>Spring Boot application - configuration beans, main class, and resources</description>
+    <name>rpi-sweet-home-persistence-db-jpa</name>
+    <description>Spring Data JPA module</description>
 
     <dependencies>
         <!-- Rpi sweet home -->
@@ -24,15 +24,7 @@
         </dependency>
         <dependency>
             <groupId>org.keirobm</groupId>
-            <artifactId>rpi-sweet-home-api-rest</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.keirobm</groupId>
-            <artifactId>rpi-sweet-home-client-rest-tvdb</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.keirobm</groupId>
-            <artifactId>rpi-sweet-home-persistence-db-jpa</artifactId>
+            <artifactId>rpi-sweet-home-domain</artifactId>
         </dependency>
         <dependency>
             <groupId>org.keirobm</groupId>
@@ -40,31 +32,36 @@
         </dependency>
         <!-- Rpi sweet home -->
 
+        <!-- JPA & DB -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- JPA & DB -->
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
+
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+
 </project>
