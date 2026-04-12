@@ -16,7 +16,12 @@
     <name>rpi-sweet-home-api-rest</name>
     <description>Inbound adapter - Spring MVC REST controllers</description>
 
+    <properties>
+        <openapi.version>3.0.2</openapi.version>
+    </properties>
+
     <dependencies>
+        <!-- Rpi sweet home -->
         <dependency>
             <groupId>org.keirobm</groupId>
             <artifactId>rpi-sweet-home-application</artifactId>
@@ -33,6 +38,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${openapi.version}</version>
         </dependency>
 
         <dependency>

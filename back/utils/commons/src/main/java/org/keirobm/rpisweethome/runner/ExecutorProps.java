@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder(toBuilder = true)
 public class ExecutorProps {
     private ExecutorType type;
     private Integer threads;
