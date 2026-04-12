@@ -1,8 +1,11 @@
 package org.keirobm.rpisweethome.common.events;
 
-import java.util.ArrayList;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Static event bus for decoupled communication between domain components.
@@ -18,8 +21,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * EventBus.publish(new UserCreatedEvent(userId));
  * }</pre>
  */
+@Slf4j
+@UtilityClass
 public class EventBus {
-    private EventBus() {}
 
     private static final ConcurrentHashMap<Class<? extends BaseEvent>, List<EventListener<?>>> listeners =
             new ConcurrentHashMap<>();
@@ -27,16 +31,19 @@ public class EventBus {
     /**
      * Publishes an event and dispatches it to all listeners registered for its concrete class.
      *
+     * @param <T>   the event type
      * @param event the event to publish; {@code event.getClass()} is used to look up listeners
      */
     @SuppressWarnings("unchecked")
-    public static void publish(BaseEvent event) {
+    public static <T extends BaseEvent> void publish(T event) {
+        log.info("Publishing event: {}", event.getClass().getSimpleName());
         Class<? extends BaseEvent> eventClass = event.getClass();
         List<EventListener<?>> eventListeners = listeners.get(eventClass);
         if (eventListeners == null) return;
 
         for (EventListener<?> listener : eventListeners) {
-            ((EventListener<BaseEvent>) listener).onEvent(event);
+            ((EventListener<T>) listener).onEvent(event);
+            log.info("Event dispatched to listener: {}", listener.getClass().getSimpleName());
         }
     }
 
@@ -48,7 +55,9 @@ public class EventBus {
      * @param listener   the listener that will handle events of that type
      */
     public static <T extends BaseEvent> void register(Class<T> eventClass, EventListener<T> listener) {
-        listeners.computeIfAbsent(eventClass, k -> new ArrayList<>()).add(listener);
+        listeners.computeIfAbsent(eventClass, k -> new CopyOnWriteArrayList<>()).add(listener);
+        log.info("Listener {} registered for event: {}", listener.getClass().getSimpleName(),
+                eventClass.getSimpleName());
     }
 
     /**
@@ -63,6 +72,8 @@ public class EventBus {
         List<EventListener<?>> eventListeners = listeners.get(eventClass);
         if (eventListeners != null) {
             eventListeners.remove(listener);
+            log.info("Listener {} unregistered for event: {}", listener.getClass().getSimpleName(),
+                    eventClass.getSimpleName());
         }
     }
 }

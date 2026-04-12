@@ -15,4 +15,11 @@
 
     <name>rpi-sweet-home-domain</name>
     <description>Domain model classes - pure business logic with no framework dependencies</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+    </dependencies>
 </project>
