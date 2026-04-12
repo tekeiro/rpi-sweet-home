@@ -46,6 +46,21 @@
             <scope>test</scope>
         </dependency>
 
+
+        <!-- Source: https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5 -->
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>5.2.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- Source: https://mvnrepository.com/artifact/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+            <version>2.21.2</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
@@ -91,7 +106,7 @@
                             <modelPackage>com.tvdb.v4.model</modelPackage>
 
                             <configOptions>
-                                <library>resttemplate</library>
+                                <library>apache-httpclient</library>
                                 <useBeanValidation>true</useBeanValidation>
                                 <serializableModel>true</serializableModel>
                                 <useJakartaEe>true</useJakartaEe>

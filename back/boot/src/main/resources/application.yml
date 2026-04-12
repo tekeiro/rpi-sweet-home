@@ -16,7 +16,7 @@ logging:
     root: INFO
     org.hibernate.SQL: DEBUG
     "org.keirobm.rpisweethome": DEBUG
-    "org.springframework.web.client": DEBUG
+    "org.apache.hc.client5": DEBUG
 
 
 rpi-sweet-home:
@@ -25,6 +25,6 @@ rpi-sweet-home:
       type: ${EXECUTORS_IO_TYPE:VIRTUAL_THREAD_POOL}
       threads: ${EXECUTORS_IO_THREADS:5}
   tvdb:
-    base-url: ${TVDB_API_BASE_URL:https://api.thetvdb.com/v4}
+    base-url: ${TVDB_API_BASE_URL:https://api4.thetvdb.com/v4}
     api-key: ${TVDB_API_KEY:}
     limit: ${TVDB_API_LIMIT:100}

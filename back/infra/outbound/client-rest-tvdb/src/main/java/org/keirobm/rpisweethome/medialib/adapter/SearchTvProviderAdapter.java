@@ -1,5 +1,7 @@
 package org.keirobm.rpisweethome.medialib.adapter;
 
+import com.tvdb.v4.ApiException;
+import com.tvdb.v4.model.GetSearchResults200Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keirobm.rpisweethome.medialib.TvdbApis;
@@ -10,6 +12,7 @@ import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItem;
 import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItemType;
 import org.keirobm.rpisweethome.medialib.watchlist.port.SearchTvProviderPort;
 import org.keirobm.rpisweethome.medialib.watchlist.thirdparty.TvdbLangs;
+import org.keirobm.rpisweethome.utils.ToRestClientException;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -36,9 +39,15 @@ public class SearchTvProviderAdapter implements SearchTvProviderPort {
         final var lang = searchRefinement.map(SearchRefinement::getLanguage)
                 .map(TvdbLangs::getLangCode).orElse(null);
 
-        final var searchResults = this.tvdbApis.getSearchApi().getSearchResults(query, null, null,
-                year, null, null, null, lang, null, null,
-                null, BigDecimal.ZERO, limit);
+        final GetSearchResults200Response searchResults;
+        try {
+            searchResults = this.tvdbApis.getSearchApi().getSearchResults(query, null, null,
+                    year, null, null, null, lang, null, null,
+                    null, BigDecimal.ZERO, limit);
+        } catch (ApiException e) {
+            log.error("Error searching for {}", query, e);
+            throw ToRestClientException.toRestClientException(e);
+        }
 
         return Optional.ofNullable(searchResults.getData()).orElse(List.of())
                 .stream().map(searchResultMapper::fromSearchResult)

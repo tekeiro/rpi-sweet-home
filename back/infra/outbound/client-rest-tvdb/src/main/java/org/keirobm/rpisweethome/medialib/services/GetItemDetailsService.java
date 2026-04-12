@@ -1,5 +1,6 @@
 package org.keirobm.rpisweethome.medialib.services;
 
+import com.tvdb.v4.ApiException;
 import com.tvdb.v4.model.GetEpisodeTranslation200Response;
 import com.tvdb.v4.model.Translation;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItem;
 import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItemType;
 import org.keirobm.rpisweethome.medialib.watchlist.thirdparty.TvdbLangs;
 import org.keirobm.rpisweethome.runner.TaskRunner;
+import org.keirobm.rpisweethome.utils.ToRestClientException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 
@@ -57,9 +59,23 @@ public class GetItemDetailsService {
         final BigDecimal idToNumber = new BigDecimal(externalId);
 
         final var getMovieDetailsTask = this.ioExecutor.submit("get-movie-extended",
-                () -> this.tvdbApis.getMoviesApi().getMovieExtended(idToNumber, null, null));
+                () -> {
+                    try {
+                        return this.tvdbApis.getMoviesApi().getMovieExtended(idToNumber, null, null);
+                    } catch (ApiException e) {
+                        log.error("Error getting movie details", e);
+                        throw ToRestClientException.toRestClientException(e);
+                    }
+                });
         final var getMovieOverviewTask = this.ioExecutor.submit("get-movie-overview",
-                this.overviewSupplier(() -> this.tvdbApis.getMoviesApi().getMovieTranslation(idToNumber, TvdbLangs.DEFAULT_LANG.getLangCode())));
+                this.overviewSupplier(() -> {
+                    try {
+                        return this.tvdbApis.getMoviesApi().getMovieTranslation(idToNumber, TvdbLangs.DEFAULT_LANG.getLangCode());
+                    } catch (ApiException e) {
+                        log.error("Error getting movie translation", e);
+                        throw ToRestClientException.toRestClientException(e);
+                    }
+                }));
 
         final var overview = getMovieOverviewTask.join();
         final var response = getMovieDetailsTask.join();
@@ -74,9 +90,23 @@ public class GetItemDetailsService {
         final BigDecimal idToNumber = new BigDecimal(externalId);
 
         final var getSeriesDetailsTask = this.ioExecutor.submit("get-series-extended",
-                () -> this.tvdbApis.getSeriesApi().getSeriesExtended(idToNumber, null, null));
+                () -> {
+                    try {
+                        return this.tvdbApis.getSeriesApi().getSeriesExtended(idToNumber, null, null);
+                    } catch (ApiException e) {
+                        log.error("Error getting series details", e);
+                        throw ToRestClientException.toRestClientException(e);
+                    }
+                });
         final var getSeriesOverviewTask = this.ioExecutor.submit("get-series-overview",
-                this.overviewSupplier(() -> this.tvdbApis.getSeriesApi().getSeriesTranslation(idToNumber, TvdbLangs.DEFAULT_LANG.getLangCode())));
+                this.overviewSupplier(() -> {
+                    try {
+                        return this.tvdbApis.getSeriesApi().getSeriesTranslation(idToNumber, TvdbLangs.DEFAULT_LANG.getLangCode());
+                    } catch (ApiException e) {
+                        log.error("Error getting series translation", e);
+                        throw ToRestClientException.toRestClientException(e);
+                    }
+                }));
 
         final var seriesDetails = getSeriesDetailsTask.join();
         final var overview = getSeriesOverviewTask.join();

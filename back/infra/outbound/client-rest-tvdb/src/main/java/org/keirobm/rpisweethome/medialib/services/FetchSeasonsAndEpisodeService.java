@@ -1,5 +1,6 @@
 package org.keirobm.rpisweethome.medialib.services;
 
+import com.tvdb.v4.ApiException;
 import com.tvdb.v4.model.GetSeasonExtended200Response;
 import com.tvdb.v4.model.GetSeriesArtworks200Response;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.keirobm.rpisweethome.medialib.watchlist.model.Episode;
 import org.keirobm.rpisweethome.medialib.watchlist.model.Season;
 import org.keirobm.rpisweethome.medialib.watchlist.model.TvShow;
 import org.keirobm.rpisweethome.runner.TaskRunner;
+import org.keirobm.rpisweethome.utils.ToRestClientException;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -54,7 +56,14 @@ public class FetchSeasonsAndEpisodeService {
 
         seasons.forEach(season -> {
            final var getSeasonTask = this.ioExecutor.submit("fetch-season-"+season.getNumber(), () ->
-                   this.tvdbApis.getSeasonsApi().getSeasonExtended(new BigDecimal(season.getExternalId())));
+           {
+               try {
+                   return this.tvdbApis.getSeasonsApi().getSeasonExtended(new BigDecimal(season.getExternalId()));
+               } catch (ApiException e) {
+                   log.error("Error fetching season {}", season.getNumber(), e);
+                   throw ToRestClientException.toRestClientException(e);
+               }
+           });
            seasonTasks.put(season.getNumber(), getSeasonTask);
            seasonMap.put(season.getNumber(), season);
         });
