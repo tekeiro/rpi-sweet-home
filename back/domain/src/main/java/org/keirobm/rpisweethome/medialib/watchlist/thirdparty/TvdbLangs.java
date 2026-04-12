@@ -11,4 +11,6 @@ public enum TvdbLangs {
 
     private final String langCode;
 
+    public static final TvdbLangs DEFAULT_LANG = SPA;
+
 }

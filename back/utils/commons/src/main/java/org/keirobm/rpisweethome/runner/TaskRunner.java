@@ -12,11 +12,11 @@ public class TaskRunner {
 
     private final ExecutorService executorService;
 
-    public <R> CompletableFuture<R> submit(Supplier<R> task) {
+    public <R> CompletableFuture<R> submit(String taskName, Supplier<R> task) {
         return CompletableFuture.supplyAsync(task, executorService);
     }
 
-    public CompletableFuture<Void> submit(Runnable task) {
+    public CompletableFuture<Void> submit(String taskName, Runnable task) {
         return CompletableFuture.runAsync(task, executorService);
     }
 

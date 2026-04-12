@@ -18,7 +18,6 @@ public class TaskRunnerExecutorsConfig {
     }
 
     @Bean
-    @Qualifier("ioExecutor")
     public TaskRunner ioExecutor(ExecutorProps ioExecutorProps) {
         return TaskRunnerFactory.createFrom(ioExecutorProps);
     }

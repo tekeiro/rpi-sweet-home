@@ -14,6 +14,7 @@ public class Season {
 
     private Integer number;
     private String externalId;
+    private String imageUrl;
     private boolean watched;
     private boolean toDownload;
 

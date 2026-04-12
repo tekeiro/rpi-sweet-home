@@ -13,6 +13,8 @@ public class Episode {
     private Integer number;
     private String title;
     private String externalId;
+    private String overview;
+    private String imageUrl;
     private boolean watched;
     private boolean toDownload;
 
