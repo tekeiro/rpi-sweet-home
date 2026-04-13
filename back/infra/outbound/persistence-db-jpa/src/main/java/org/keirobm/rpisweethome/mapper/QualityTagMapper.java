@@ -5,7 +5,7 @@ import org.keirobm.rpisweethome.medialib.search.model.QualityTag;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface QualityTagMapper {
 
     QualityTagEntity toEntity(QualityTag qualityTag);

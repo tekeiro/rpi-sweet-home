@@ -5,7 +5,7 @@ import org.keirobm.rpisweethome.model.QualityTagDTO;
 import org.keirobm.rpisweethome.model.QualityTagFormDTO;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface QualityTagDtoMapper {
 
     QualityTagDTO toDto(QualityTag tag);

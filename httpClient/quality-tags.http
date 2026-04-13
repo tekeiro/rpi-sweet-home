@@ -1,0 +1,33 @@
+### Get all quality tags
+GET http://localhost:8080/v1/medialib/quality-tags
+Content-Type: application/json
+
+### Create a quality tag
+POST http://localhost:8080/v1/medialib/quality-tags
+Content-Type: application/json
+
+{
+  "tag": "4K",
+  "aliases": [],
+  "score": 90,
+  "excludeImmediately": false
+}
+
+### Get a quality tag by ID
+GET http://localhost:8080/v1/medialib/quality-tags/2
+Content-Type: application/json
+
+### Edit a quality tag
+PUT http://localhost:8080/v1/medialib/quality-tags/2
+Content-Type: application/json
+
+{
+  "tag": "4K",
+  "aliases": ["4k"],
+  "score": 90,
+  "excludeImmediately": false
+}
+
+### Delete a quality tag
+DELETE http://localhost:8080/v1/medialib/quality-tags/1
+Content-Type: application/json
