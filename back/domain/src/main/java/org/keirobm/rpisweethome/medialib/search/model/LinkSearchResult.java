@@ -12,6 +12,7 @@ import java.util.List;
 public class LinkSearchResult {
     private String fullTitle;
     private String title;
+    private String providerKey;
     private WatchlistItemType contentType;
     private List<QualityTag> tags;
     private WatchlistItem item;

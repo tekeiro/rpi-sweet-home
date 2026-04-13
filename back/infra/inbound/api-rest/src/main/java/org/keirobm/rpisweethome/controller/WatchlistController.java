@@ -43,22 +43,4 @@ public class WatchlistController implements WatchlistApi {
                 items.stream().map(this.watchlistItemMapper::toDto).toList()
         );
     }
-
-    @Override
-    public ResponseEntity<WatchlistItemDTO> v1MediaLibGetWatchlistItemById(BigDecimal id) {
-        final var item = this.watchlistItemUseCase.getWatchlistItemById(id.longValue());
-        return item.map(i -> ResponseEntity.ok(this.watchlistItemMapper.toDto(i)))
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @Override
-    public ResponseEntity<WatchlistItemDTO> v1MediaLibUpdateWatchlistItem(BigDecimal id, PutWatchlistItemDTO putWatchlistItemDTO) {
-        final UpdateWatchlistItem request = UpdateWatchlistItem.builder()
-                .markToWatch(putWatchlistItemDTO.getMarkAsWatched())
-                .markToDownload(putWatchlistItemDTO.getMarkToDownload())
-                .build();
-        final var itemModel = this.watchlistItemUseCase.updateWatchlistItem(id.longValue(), request);
-        return itemModel.map(i -> ResponseEntity.ok(this.watchlistItemMapper.toDto(i)))
-                .orElse(ResponseEntity.notFound().build());
-    }
 }

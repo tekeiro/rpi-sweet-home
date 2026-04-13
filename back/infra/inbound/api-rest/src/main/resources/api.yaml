@@ -11,8 +11,10 @@ tags:
     description: To search in provider
   - name: Watchlist
     description: Add or get media items from watchlist
+  - name: Movies
+    description: Movies or films
   - name: TvShows
-    description: Modify tv show objects like seasons or episodes
+    description: Tv shows
   - name: QualityTags
     description: Manage quality tags for media items
 
@@ -21,8 +23,14 @@ paths:
     $ref: "services/search.yml#/schemas/SearchApi"
   /v1/medialib/watchlist:
     $ref: "services/watchlist.yml#/schemas/WatchlistApi"
-  /v1/medialib/watchlist/{id}:
-    $ref: "services/watchlistitem.yml#/schemas/WatchlistItemApi"
+  /v1/medialib/movies:
+    $ref: "services/movies.yml#/schemas/MovieApi"
+  /v1/medialib/movies/{id}:
+    $ref: "services/movies.yml#/schemas/MovieByItemApi"
+  /v1/medialib/tvshows:
+    $ref: "services/tvshows.yml#/schemas/TvShowApi"
+  /v1/medialib/tvshows/{id}:
+    $ref: "services/tvshows.yml#/schemas/TvShowByItemApi"
   /v1/medialib/tvshows/{id}/seasons/{season}:
     $ref: "services/tvshows.yml#/schemas/SeasonApi"
   /v1/medialib/tvshows/{id}/seasons/{season}/episodes/{episode}:

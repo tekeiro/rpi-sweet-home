@@ -6,6 +6,7 @@ import org.keirobm.rpisweethome.medialib.watchlist.input.UpdateSeasonOrEpisode;
 import org.keirobm.rpisweethome.medialib.watchlist.model.Episode;
 import org.keirobm.rpisweethome.medialib.watchlist.model.Season;
 import org.keirobm.rpisweethome.medialib.watchlist.model.TvShow;
+import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItemType;
 import org.keirobm.rpisweethome.medialib.watchlist.port.WatchlistPersistencePort;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ public class UpdateSeasonOrEpisodeUseCase {
     private final WatchlistPersistencePort watchlistPersistencePort;
 
     public Season updateSeason(Long id, Integer seasonNumber, UpdateSeasonOrEpisode request) {
-        return this.watchlistPersistencePort.getItemById(id)
+        return this.watchlistPersistencePort.getItemById(WatchlistItemType.TV_SHOW, id)
                 .filter(item -> item instanceof TvShow)
                 .map(item -> (TvShow) item)
                 .map(tvShow -> {
@@ -38,7 +39,7 @@ public class UpdateSeasonOrEpisodeUseCase {
     }
 
     public Episode updateEpisode(Long id, Integer seasonNumber, Integer episodeNumber, UpdateSeasonOrEpisode request) {
-        return this.watchlistPersistencePort.getItemById(id)
+        return this.watchlistPersistencePort.getItemById(WatchlistItemType.TV_SHOW, id)
                 .filter(item -> item instanceof TvShow)
                 .map(item -> (TvShow) item)
                 .map(tvShow -> {

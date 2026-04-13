@@ -1,4 +1,4 @@
-package org.keirobm.rpisweethome.medialib.usecases;
+package org.keirobm.rpisweethome.medialib.listeners;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

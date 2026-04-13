@@ -1,0 +1,87 @@
+schemas:
+  MovieApi:
+    get:
+      summary: List of Movies
+      operationId: v1MoviesList
+      tags:
+        - Movies
+      responses:
+        '200':
+          description: List of movies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "../components/watchlistitem.yml#/schemas/MovieDTO"
+    post:
+      summary: Create a Movie to watch
+      operationId: v1MoviesCreate
+      tags:
+        - Movies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - externalId
+              properties:
+                externalId:
+                  type: string
+      responses:
+        '200':
+          description: Item added to watchlist successfully
+          content:
+            application/json:
+              schema:
+                $ref: "../components/watchlistitem.yml#/schemas/MovieDTO"
+  MovieByItemApi:
+    get:
+      summary: Get a Movie by its ID
+      operationId: v1MoviesByIdGet
+      tags:
+        - Movies
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+            format: int64
+      responses:
+        '200':
+          description: Movie
+          content:
+            application/json:
+              schema:
+                $ref: "../components/watchlistitem.yml#/schemas/MovieDTO"
+        '404':
+          description: Movie not found
+    put:
+      summary: Update a Movie
+      operationId: v1MoviesByIdPut
+      tags:
+        - Movies
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "../request/watchlistitem.yml#/schemas/PutWatchlistItemDTO"
+      responses:
+        '200':
+          description: Movie
+          content:
+            application/json:
+              schema:
+                $ref: "../components/watchlistitem.yml#/schemas/MovieDTO"
+        '404':
+          description: Movie not found

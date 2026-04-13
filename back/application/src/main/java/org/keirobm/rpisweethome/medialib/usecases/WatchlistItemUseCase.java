@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keirobm.rpisweethome.medialib.watchlist.input.UpdateWatchlistItem;
 import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItem;
+import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItemType;
 import org.keirobm.rpisweethome.medialib.watchlist.port.WatchlistPersistencePort;
 import org.springframework.stereotype.Component;
 
@@ -21,12 +22,10 @@ public class WatchlistItemUseCase {
         return this.watchlistPersistencePort.getWatchlistItems();
     }
 
-    public Optional<WatchlistItem> getWatchlistItemById(Long id) {
-        return this.watchlistPersistencePort.getItemById(id);
-    }
 
-    public Optional<WatchlistItem> updateWatchlistItem(Long id, UpdateWatchlistItem request) {
-        final var itemOpt = this.watchlistPersistencePort.getItemById(id);
+    @Deprecated
+    public Optional<WatchlistItem> updateWatchlistItem(WatchlistItemType type, Long id, UpdateWatchlistItem request) {
+        final var itemOpt = this.watchlistPersistencePort.getItemById(type, id);
         return itemOpt.map(watchlistItem -> {
             if (request.getMarkToDownload() != null) {
                 watchlistItem.setToDownload(request.getMarkToDownload());

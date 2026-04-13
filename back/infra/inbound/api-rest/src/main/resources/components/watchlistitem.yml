@@ -7,11 +7,6 @@ schemas:
     type: object
     allOf:
         - $ref: '#/schemas/WatchlistItemCommonDTO'
-        - oneOf:
-            - $ref: '#/schemas/MovieDTO'
-            - $ref: '#/schemas/TvShowDTO'
-          discriminator:
-            propertyName: type
   WatchlistItemCommonDTO:
     type: object
     required:
@@ -47,16 +42,21 @@ schemas:
         type: boolean
   MovieDTO:
     type: object
+    allOf:
+      - $ref: '#/schemas/WatchlistItemCommonDTO'
   TvShowDTO:
     type: object
-    properties:
-      onAir:
-        type: string
-        enum: [ON_AIR, FINISHED]
-      seasons:
-        type: array
-        items:
-          $ref: '#/schemas/SeasonDTO'
+    allOf:
+      - $ref: '#/schemas/WatchlistItemCommonDTO'
+      - type: object
+        properties:
+          onAir:
+            type: string
+            enum: [ON_AIR, FINISHED]
+          seasons:
+            type: array
+            items:
+              $ref: '#/schemas/SeasonDTO'
   SeasonDTO:
     type: object
     required:

@@ -1,4 +1,90 @@
 schemas:
+  TvShowApi:
+    get:
+      summary: List of tv shows
+      operationId: v1TvShowList
+      tags:
+        - TvShows
+      responses:
+        '200':
+          description: List of tv shows
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "../components/watchlistitem.yml#/schemas/TvShowDTO"
+    post:
+      summary: Create a Tv Show to watch
+      operationId: v1TvShowCreate
+      tags:
+        - TvShows
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - externalId
+              properties:
+                externalId:
+                  type: string
+      responses:
+        '200':
+          description: Item added to watchlist successfully
+          content:
+            application/json:
+              schema:
+                $ref: "../components/watchlistitem.yml#/schemas/TvShowDTO"
+  TvShowByItemApi:
+    get:
+      summary: Get a Tv Show by its ID
+      operationId: v1TvShowByIdGet
+      tags:
+        - TvShows
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+            format: int64
+      responses:
+        '200':
+          description: Tv show
+          content:
+            application/json:
+              schema:
+                $ref: "../components/watchlistitem.yml#/schemas/TvShowDTO"
+        '404':
+          description: Movie not found
+    put:
+      summary: Update a tv show
+      operationId: v1TvShowsByIdPut
+      tags:
+        - TvShows
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "../request/watchlistitem.yml#/schemas/PutWatchlistItemDTO"
+      responses:
+        '200':
+          description: Tv show
+          content:
+            application/json:
+              schema:
+                $ref: "../components/watchlistitem.yml#/schemas/TvShowDTO"
+        '404':
+          description: Movie not found
   SeasonApi:
     put:
       summary: Update season item

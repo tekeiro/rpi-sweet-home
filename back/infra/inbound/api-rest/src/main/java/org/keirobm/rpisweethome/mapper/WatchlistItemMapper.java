@@ -24,14 +24,14 @@ public class WatchlistItemMapper {
         dto.setExternalId(item.getExternalId());
         dto.setWatched(item.isWatched());
         dto.setToDownload(item.isToDownload());
-        if (item instanceof TvShow tvShow) {
-            dto.setOnAir(WatchlistItemDTO.OnAirEnum.valueOf(tvShow.getOnAir().name()));
-            dto.setSeasons(
-                    tvShow.getSeasons().stream()
-                            .map(this.seasonMapper::toDto)
-                            .toList()
-            );
-        }
+//        if (item instanceof TvShow tvShow) {
+//            dto.setOnAir(WatchlistItemDTO.OnAirEnum.valueOf(tvShow.getOnAir().name()));
+//            dto.setSeasons(
+//                    tvShow.getSeasons().stream()
+//                            .map(this.seasonMapper::toDto)
+//                            .toList()
+//            );
+//        }
         return dto;
     }
 
