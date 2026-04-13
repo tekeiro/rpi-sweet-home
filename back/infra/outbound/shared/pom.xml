@@ -10,11 +10,11 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>rpi-sweet-home-scrappers</artifactId>
+    <artifactId>rpi-sweet-home-shared</artifactId>
     <packaging>jar</packaging>
 
-    <name>rpi-sweet-home-scrappers</name>
-    <description>Scrappers module</description>
+    <name>rpi-sweet-home-shared</name>
+    <description>Shared infra module</description>
 
     <dependencies>
         <!-- Rpi sweet home -->
@@ -31,14 +31,6 @@
             <artifactId>rpi-sweet-home-commons</artifactId>
         </dependency>
         <!-- Rpi sweet home -->
-
-        <!-- Source: https://mvnrepository.com/artifact/org.jsoup/jsoup -->
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.22.1</version>
-            <scope>compile</scope>
-        </dependency>
 
 
         <dependency>

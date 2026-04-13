@@ -28,3 +28,7 @@ rpi-sweet-home:
     base-url: ${TVDB_API_BASE_URL:https://api4.thetvdb.com/v4}
     api-key: ${TVDB_API_KEY:}
     limit: ${TVDB_API_LIMIT:100}
+  scrappers:
+    mejor-torrent:
+      base-url: ${MEJORTORRENT_BASE_URL:https://www42.mejortorrent.eu}
+      query-path: ${MEJORTORRENT_QUERY_PATH:/busqueda?q=%s}

@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keirobm.rpisweethome.common.events.EventBus;
 import org.keirobm.rpisweethome.common.events.EventListener;
+import org.keirobm.rpisweethome.medialib.search.model.LinkSearchRequest;
+import org.keirobm.rpisweethome.medialib.search.port.LinkSearchPort;
 import org.keirobm.rpisweethome.medialib.watchlist.events.MovieToDownloadEvent;
 import org.keirobm.rpisweethome.medialib.watchlist.model.Movie;
 import org.keirobm.rpisweethome.runner.TaskRunner;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 public class MovieToDownloadEventUseCase implements EventListener<MovieToDownloadEvent> {
 
     private final TaskRunner ioExecutor;
+    private final LinkSearchPort linkSearchPort;
 
     @PostConstruct
     public void init() {
@@ -29,7 +32,9 @@ public class MovieToDownloadEventUseCase implements EventListener<MovieToDownloa
 
     private Movie downloadMovie(MovieToDownloadEvent evt) {
         final var movie = evt.getMovie();
-
+        final var searchResults = this.linkSearchPort.search(LinkSearchRequest.builder()
+                .item(movie)
+                .build());
         return movie;
     }
 

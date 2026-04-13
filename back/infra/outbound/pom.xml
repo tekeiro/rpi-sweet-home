@@ -20,5 +20,6 @@
         <module>client-rest-tvdb</module>
         <module>persistence-db-jpa</module>
         <module>scrappers</module>
+        <module>shared</module>
     </modules>
 </project>

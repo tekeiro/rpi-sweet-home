@@ -21,4 +21,5 @@ public class LinkSearchResult {
     private Integer toEpisode;
     private String torrentUrl;
     private Double score;
+    private Double titleCoincidence;
 }

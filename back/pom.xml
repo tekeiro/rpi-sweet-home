@@ -82,6 +82,11 @@
                 <artifactId>rpi-sweet-home-scrappers</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>org.keirobm</groupId>
+                <artifactId>rpi-sweet-home-shared</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
