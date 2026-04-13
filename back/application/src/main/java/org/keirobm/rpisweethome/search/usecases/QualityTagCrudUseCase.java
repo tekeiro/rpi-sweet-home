@@ -1,6 +1,10 @@
 package org.keirobm.rpisweethome.search.usecases;
 
 import lombok.RequiredArgsConstructor;
+import org.keirobm.rpisweethome.common.events.EventBus;
+import org.keirobm.rpisweethome.medialib.search.events.CreatedQualityTagEvent;
+import org.keirobm.rpisweethome.medialib.search.events.DeletedQualityTagEvent;
+import org.keirobm.rpisweethome.medialib.search.events.UpdatedQualityTagEvent;
 import org.keirobm.rpisweethome.medialib.search.model.QualityTag;
 import org.keirobm.rpisweethome.medialib.search.port.QualityTagPersistencePort;
 import org.springframework.stereotype.Component;
@@ -15,7 +19,9 @@ public class QualityTagCrudUseCase {
     private final QualityTagPersistencePort qualityTagPersistencePort;
 
     public QualityTag create(QualityTag qualityTag) {
-        return this.qualityTagPersistencePort.persist(qualityTag.toBuilder().id(null).build());
+        final var tagSaved = this.qualityTagPersistencePort.persist(qualityTag.toBuilder().id(null).build());
+        EventBus.publish(new CreatedQualityTagEvent(tagSaved));
+        return tagSaved;
     }
 
     public List<QualityTag> getAll() {
@@ -27,11 +33,16 @@ public class QualityTagCrudUseCase {
     }
 
     public QualityTag update(Long id, QualityTag qualityTag) {
-        return this.qualityTagPersistencePort.persist(qualityTag.toBuilder().id(id).build());
+        final var tagSaved = this.qualityTagPersistencePort.persist(qualityTag.toBuilder().id(id).build());
+        EventBus.publish(new UpdatedQualityTagEvent(tagSaved));
+        return tagSaved;
     }
 
     public void delete(Long id) {
-        this.qualityTagPersistencePort.deleteById(id);
+        this.qualityTagPersistencePort.getById(id).ifPresent(tag -> {
+            this.qualityTagPersistencePort.deleteById(id);
+            EventBus.publish(new DeletedQualityTagEvent(tag));
+        });
     }
 
 }
