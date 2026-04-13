@@ -21,6 +21,11 @@
             <groupId>org.keirobm</groupId>
             <artifactId>rpi-sweet-home-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.keirobm</groupId>
+            <artifactId>rpi-sweet-home-commons</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

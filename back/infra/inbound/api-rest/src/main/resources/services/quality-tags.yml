@@ -39,8 +39,9 @@ schemas:
         - name: id
           in: path
           required: true
-          type: number
-          format: int64
+          schema:
+            type: number
+            format: int64
       responses:
         '200':
           description: Quality tag
@@ -59,8 +60,9 @@ schemas:
         - name: id
           in: path
           required: true
-          type: number
-          format: int64
+          schema:
+            type: number
+            format: int64
       requestBody:
         content:
           application/json:
@@ -82,8 +84,9 @@ schemas:
         - name: id
           in: path
           required: true
-          type: number
-          format: int64
+          schema:
+            type: number
+            format: int64
       responses:
         '204':
           description: Quality tag deleted
