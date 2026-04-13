@@ -1,0 +1,91 @@
+schemas:
+  QualityTagApi:
+    get:
+      summary: List Quality Tags
+      operationId: v1QualityTagListGet
+      tags:
+        - QualityTags
+      responses:
+        '200':
+          description: List of quality tags
+          content:
+            application/json:
+              schema:
+                $ref: "../components/quality-tags.yml#/schemas/QualityTagListDTO"
+    post:
+      summary: Create Quality Tag
+      operationId: v1QualityTagCreatePost
+      tags:
+        - QualityTags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "../components/quality-tags.yml#/schemas/QualityTagFormDTO"
+      responses:
+        '201':
+          description: Quality tag created
+          content:
+            application/json:
+              schema:
+                $ref: "../components/quality-tags.yml#/schemas/QualityTagDTO"
+  QualityTagByItemApi:
+    get:
+      summary: List Quality Tags by Item
+      operationId: v1QualityTagByItemGet
+      tags:
+        - QualityTags
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: number
+          format: int64
+      responses:
+        '200':
+          description: Quality tag
+          content:
+            application/json:
+              schema:
+                $ref: "../components/quality-tags.yml#/schemas/QualityTagDTO"
+        '404':
+          description: Item not found
+    put:
+      summary: Update Quality Tag
+      operationId: v1QualityTagByItemPut
+      tags:
+        - QualityTags
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: number
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "../components/quality-tags.yml#/schemas/QualityTagFormDTO"
+      responses:
+        '200':
+          description: Quality tag updated
+          content:
+            application/json:
+              schema:
+                $ref: "../components/quality-tags.yml#/schemas/QualityTagDTO"
+    delete:
+      summary: Delete Quality Tag
+      operationId: v1QualityTagByItemDelete
+      tags:
+        - QualityTags
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: number
+          format: int64
+      responses:
+        '204':
+          description: Quality tag deleted
+        '404':
+          description: Item not found

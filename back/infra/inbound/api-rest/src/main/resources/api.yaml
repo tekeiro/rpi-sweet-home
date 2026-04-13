@@ -13,6 +13,8 @@ tags:
     description: Add or get media items from watchlist
   - name: TvShows
     description: Modify tv show objects like seasons or episodes
+  - name: QualityTags
+    description: Manage quality tags for media items
 
 paths:
   /v1/medialib/search:
@@ -25,4 +27,8 @@ paths:
     $ref: "services/tvshows.yml#/schemas/SeasonApi"
   /v1/medialib/tvshows/{id}/seasons/{season}/episodes/{episode}:
     $ref: "services/tvshows.yml#/schemas/EpisodeApi"
+  /v1/medialib/quality-tags:
+    $ref: "services/quality-tags.yml#/schemas/QualityTagApi"
+  /v1/medialib/quality-tags/{id}:
+    $ref: "services/quality-tags.yml#/schemas/QualityTagByItemApi"
 

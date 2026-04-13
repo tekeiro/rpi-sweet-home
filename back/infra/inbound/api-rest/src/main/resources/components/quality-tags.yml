@@ -1,0 +1,45 @@
+schemas:
+  QualityTagListDTO:
+    type: array
+    items:
+      $ref: '#/schemas/QualityTagDTO'
+  QualityTagDTO:
+    type: object
+    required:
+      - id
+      - tag
+      - score
+    properties:
+      id:
+        type: number
+        format: int64
+      tag:
+        type: string
+      aliases:
+        type: array
+        items:
+          type: string
+      score:
+        type: number
+        format: float
+        description: Score for the quality tag, higher is better
+      excludeImmediately:
+        type: boolean
+  QualityTagFormDTO:
+    type: object
+    required:
+      - tag
+      - score
+    properties:
+      tag:
+        type: string
+      aliases:
+        type: array
+        items:
+          type: string
+      score:
+        type: number
+        format: float
+        description: Score for the quality tag, higher is better
+      excludeImmediately:
+        type: boolean
