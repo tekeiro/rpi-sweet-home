@@ -1,0 +1,25 @@
+### Get all movies
+GET http://localhost:8080/v1/medialib/movies
+Content-Type: application/json
+
+### Add a movie to the watchlist
+POST http://localhost:8080/v1/medialib/movies
+Content-Type: application/json
+
+{
+  "externalId": "356345"
+}
+
+### Get movie by ID
+GET http://localhost:8080/v1/medialib/movies/1
+Content-Type: application/json
+
+
+### Update a movie by ID
+PUT http://localhost:8080/v1/medialib/movies/1
+Content-Type: application/json
+
+{
+  "markToDownload": true,
+  "markAsWatched": false
+}

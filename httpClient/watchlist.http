@@ -1,0 +1,15 @@
+
+### Add a search result to watchlist
+POST http://localhost:8080/v1/medialib/watchlist
+Content-Type: application/json
+
+{
+  "type": "TV_SHOW",
+  "externalId": "436457"
+}
+
+
+### Get all items of watchlist
+GET http://localhost:8080/v1/medialib/watchlist
+Content-Type: application/json
+

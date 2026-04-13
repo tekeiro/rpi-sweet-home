@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -49,8 +50,9 @@ public class SearchTvProviderAdapter implements SearchTvProviderPort {
             throw ToRestClientException.toRestClientException(e);
         }
 
-        return Optional.ofNullable(searchResults.getData()).orElse(List.of())
-                .stream().map(searchResultMapper::fromSearchResult)
+        return Optional.ofNullable(searchResults.getData()).orElse(List.of()).stream()
+                .map(searchResultMapper::fromSearchResult)
+                .filter(Objects::nonNull)
                 .toList();
     }
 

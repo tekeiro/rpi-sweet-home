@@ -14,6 +14,10 @@ public class WatchlistItemMapper {
 
     public WatchlistItemDTO toDto(WatchlistItem item) {
         final var dto = new WatchlistItemDTO();
+        if (item == null) {
+            return dto;
+        }
+
         dto.setType(WatchlistItemDTO.TypeEnum.valueOf(item.getType().name()));
         dto.setId(item.getId());
         dto.setTitle(item.getTitle());

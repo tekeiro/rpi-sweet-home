@@ -1,3 +1,34 @@
+### Get tv shows
+GET http://localhost:8080/v1/medialib/tvshows
+Content-Type: application/json
+
+
+### Add a tv show to the watchlist
+POST http://localhost:8080/v1/medialib/tvshows
+Content-Type: application/json
+
+{
+  "externalId": "433631"
+}
+
+
+
+### Get tv show by ID
+GET http://localhost:8080/v1/medialib/tvshows/202
+Content-Type: application/json
+
+
+### Update tv show by ID
+PUT http://localhost:8080/v1/medialib/tvshows/202
+Content-Type: application/json
+
+{
+  "markToDownload": true,
+  "markAsWatched": false
+}
+
+
+
 ### Mark as watched or to download a Episode of a Tv Show
 PUT http://localhost:8080/v1/medialib/tvshows/152/seasons/1/episodes/1
 Content-Type: application/json
@@ -15,3 +46,5 @@ Content-Type: application/json
   "markToDownload": true,
   "markAsWatched": false
 }
+
+

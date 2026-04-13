@@ -1,0 +1,13 @@
+### Search a tv show
+GET http://localhost:8080/v1/medialib/search?
+    query=pluribus
+
+### Search a tv show (with spaces)
+GET http://localhost:8080/v1/medialib/search?
+    query=el%20caballero%20de%20los%20siete%20reinos
+
+### Search a film
+GET http://localhost:8080/v1/medialib/search?
+    query=weapons
+
+
