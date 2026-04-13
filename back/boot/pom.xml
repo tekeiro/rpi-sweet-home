@@ -38,6 +38,10 @@
             <groupId>org.keirobm</groupId>
             <artifactId>rpi-sweet-home-commons</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.keirobm</groupId>
+            <artifactId>rpi-sweet-home-scrappers</artifactId>
+        </dependency>
         <!-- Rpi sweet home -->
 
         <dependency>

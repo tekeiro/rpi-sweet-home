@@ -23,3 +23,5 @@ Application to manage media files (films and tv shows).
 ### 4. User mark a item or season or episode to download
 
 ### 5. User mark a item or season or episode as watched
+
+### (Event: When a episode or movie is mark to download)

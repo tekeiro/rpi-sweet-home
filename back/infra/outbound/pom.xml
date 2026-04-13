@@ -19,5 +19,6 @@
     <modules>
         <module>client-rest-tvdb</module>
         <module>persistence-db-jpa</module>
+        <module>scrappers</module>
     </modules>
 </project>
