@@ -7,36 +7,38 @@ import org.keirobm.rpisweethome.common.events.EventBus;
 import org.keirobm.rpisweethome.common.events.EventListener;
 import org.keirobm.rpisweethome.medialib.search.model.LinkSearchRequest;
 import org.keirobm.rpisweethome.medialib.search.port.LinkSearchPort;
-import org.keirobm.rpisweethome.medialib.watchlist.events.MovieToDownloadEvent;
-import org.keirobm.rpisweethome.medialib.watchlist.model.Movie;
+import org.keirobm.rpisweethome.medialib.watchlist.events.TvShowEpisodeToDownloadEvent;
+import org.keirobm.rpisweethome.medialib.watchlist.model.TvShow;
 import org.keirobm.rpisweethome.runner.TaskRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class MovieToDownloadEventUseCase implements EventListener<MovieToDownloadEvent> {
+public class EpisodeToDownloadEventUseCase implements EventListener<TvShowEpisodeToDownloadEvent> {
 
     private final TaskRunner ioExecutor;
     private final LinkSearchPort linkSearchPort;
 
     @PostConstruct
-    public void init() {
-        EventBus.register(MovieToDownloadEvent.class, this);
+    void init() {
+        EventBus.register(TvShowEpisodeToDownloadEvent.class, this);
     }
 
     @Override
-    public void onEvent(MovieToDownloadEvent event) {
-        ioExecutor.submit("on-movie-to-download-"+ event.toString(), () ->
-                this.downloadMovie(event));
+    public void onEvent(TvShowEpisodeToDownloadEvent event) {
+        ioExecutor.submit("on-episode-to-download-"+event.toString(), () ->
+                this.downloadEpisode(event));
     }
 
-    private Movie downloadMovie(MovieToDownloadEvent evt) {
-        final var movie = evt.getMovie();
+    private TvShow downloadEpisode(TvShowEpisodeToDownloadEvent event) {
+        final var tvShow = event.getTvShow();
         final var searchResults = this.linkSearchPort.search(LinkSearchRequest.builder()
-                .item(movie)
+                .item(tvShow)
+                .season(event.getSeason().getNumber())
+                .episode(event.getEpisode().getNumber())
                 .build());
-        return movie;
+        return tvShow;
     }
 
 }

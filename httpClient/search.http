@@ -1,6 +1,6 @@
 ### Search a tv show
 GET http://localhost:8080/v1/medialib/search?
-    query=pluribus
+    query=los%20protegidos
 
 ### Search a tv show (with spaces)
 GET http://localhost:8080/v1/medialib/search?

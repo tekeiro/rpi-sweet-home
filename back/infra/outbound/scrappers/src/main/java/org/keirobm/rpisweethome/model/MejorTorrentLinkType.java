@@ -8,7 +8,7 @@ import org.keirobm.rpisweethome.medialib.watchlist.model.WatchlistItemType;
 @RequiredArgsConstructor
 public enum MejorTorrentLinkType {
     FILM("peliculas", WatchlistItemType.MOVIE),
-    DOCUMENTAL("documentales", WatchlistItemType.MOVIE),
+    DOCUMENTAL("documentales", null),
     SERIES("series", WatchlistItemType.TV_SHOW),
 
     ;

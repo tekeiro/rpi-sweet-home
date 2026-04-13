@@ -21,6 +21,7 @@ public class MejorTorrentScrapperProvider implements ScrapperProvider {
 
     private final MejorTorrentConfigProps props;
     private final MejorTorrentMovieScrapper movieScrapper;
+    private final MejorTorrentTvShowScrapper tvShowScrapper;
 
     public static final String PROVIDER_KEY = "MEJORTORRENTS";
 
@@ -36,7 +37,7 @@ public class MejorTorrentScrapperProvider implements ScrapperProvider {
 
         return switch (request.getItem().getType()) {
             case MOVIE -> movieScrapper.search(url, request);
-            case TV_SHOW -> List.of();
+            case TV_SHOW -> tvShowScrapper.search(url, request);
         };
     }
 
